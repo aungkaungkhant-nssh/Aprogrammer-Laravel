@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreRequest;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
@@ -14,26 +15,25 @@ class PostController extends Controller
     public function create(){
         return view("create");
     }
-    public function store(Request $request){
-        $post=new Post();
-        $post->title=$request->title;
-        $post->description=$request->description;
-        $post->save();
+    public function store(StoreRequest $request){
+        Post::create([
+            "title"=>$request->title,
+            "description"=>$request->description
+        ]);
         return redirect()->route("post.index");
     }
-    public function show($id){
-        $post=Post::findOrFail($id);
+    public function show(Post $post){
+       
         return view("show",compact("post"));
     }
-    public function edit($id){
-        $post=Post::findOrFail($id);
+    public function edit(Post $post){
         return view("edit",compact("post"));
     }
-    public function update(Request $request,$id){
-        $post=Post::findOrFail($id);
-        $post->title=$request->title;
-        $post->description=$request->description;
-        $post->save();
+    public function update(StoreRequest $request,Post $post){
+        $post->update([
+            "title"=>$request->title,
+            "description"=>$request->description
+        ]);
         return redirect()->route("post.index");
     }
     public function destroy($id){
