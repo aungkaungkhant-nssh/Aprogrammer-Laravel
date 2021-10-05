@@ -10,7 +10,7 @@
                 </div>
                 <div class="card-body">
                     <p>{{$post->description}}</h2>
-                    
+                    <p style="font-style:italic">Category : {{$post->category->name}}</p>
                 </div>
                
             </div>

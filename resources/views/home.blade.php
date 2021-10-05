@@ -1,8 +1,9 @@
-@extends('layouts.app')
+@extends('frontend.layouts.app')
 @section('title',"a progarmmer")
     @section('content')
         <div>
-            <a href="{{route('post.create')}}">Create Post</a>
+            <a href="{{route('post.create')}}" class="btn btn-primary">Create Post</a>
+            <a href="/logout" class="btn btn-warning">logout</a>
         </div>
         @foreach ($posts as $post)
             <div class="card mt-4">

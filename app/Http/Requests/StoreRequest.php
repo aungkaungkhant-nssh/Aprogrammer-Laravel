@@ -25,7 +25,8 @@ class StoreRequest extends FormRequest
     {
         return [
             "title"=>"required|max:255",
-            "description"=>"required"
+            "description"=>"required",
+            "category_id"=>"required"
         ];
     }
 }

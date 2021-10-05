@@ -26,6 +26,15 @@
                         <label for="">Description</label>
                         <input type="text" name="description" class="form-control" value="{{old('description')}}">
                      </div>
+                     <div class="form-group">
+                        <select name="category_id" id="" class="form-control">
+                            <option value="">select</option>
+                         @foreach ($categories as $category)
+                                <option value="{{$category->id}}">{{$category->name}}</option>
+                         
+                         @endforeach
+                        </select>
+                     </div>
                      <div>
                          <input type="submit" class="btn btn-primary">
                      </div>

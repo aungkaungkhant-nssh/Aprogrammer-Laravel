@@ -3,37 +3,35 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreRequest;
+use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
     public function index(){
-        $posts=Post::all();
+        $posts=Post::orderBy("id","desc")->get();
         return view("home",compact("posts"));
     }
     public function create(){
-        return view("create");
+        $categories=Category::all();
+        return view("create",compact("categories"));
     }
     public function store(StoreRequest $request){
-        Post::create([
-            "title"=>$request->title,
-            "description"=>$request->description
-        ]);
+        $validated=$request->validated();
+        Post::create($validated);
         return redirect()->route("post.index");
     }
     public function show(Post $post){
-       
         return view("show",compact("post"));
     }
     public function edit(Post $post){
-        return view("edit",compact("post"));
+        $categories=Category::all();
+        return view("edit",compact("post","categories"));
     }
     public function update(StoreRequest $request,Post $post){
-        $post->update([
-            "title"=>$request->title,
-            "description"=>$request->description
-        ]);
+        $validated=$request->validated();
+        $post->update($validated);
         return redirect()->route("post.index");
     }
     public function destroy($id){
