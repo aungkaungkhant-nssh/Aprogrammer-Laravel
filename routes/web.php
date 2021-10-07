@@ -1,8 +1,12 @@
 <?php
 
+use App\TestFacades;
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PostController;
-use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +18,9 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/',function(){
+     TestFacades::execute();
+});
 
 Route::resource('post',PostController::class)->middleware("auth:web");
 

@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('frontend.layouts.app')
 @section('title',"a progarmmer")
     @section('content')
         <div>

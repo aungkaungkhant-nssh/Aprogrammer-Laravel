@@ -3,21 +3,23 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-
-class AppServiceProvider extends ServiceProvider
+use App\Test;
+class TestServiceProvider extends ServiceProvider
 {
     /**
-     * Register any application services.
+     * Register services.
      *
      * @return void
      */
     public function register()
     {
-        
+        app()->bind("test",function(){
+            return new Test();
+         });
     }
 
     /**
-     * Bootstrap any application services.
+     * Bootstrap services.
      *
      * @return void
      */

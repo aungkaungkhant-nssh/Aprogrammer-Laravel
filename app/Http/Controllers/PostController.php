@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 class PostController extends Controller
 {
     public function index(){
-        $posts=Post::orderBy("id","desc")->get();
+        $posts=Post::where("user_id",auth()->user()->id)->orderBy("id","desc")->get();
         return view("home",compact("posts"));
     }
     public function create(){
@@ -23,9 +23,15 @@ class PostController extends Controller
         return redirect()->route("post.index");
     }
     public function show(Post $post){
+        // if($post->user_id!==auth()->user()->id){
+        //     abort(403);
+        // }
+        $this->authorize("view",$post);
         return view("show",compact("post"));
     }
     public function edit(Post $post){
+   
+        $this->authorize("view",$post);
         $categories=Category::all();
         return view("edit",compact("post","categories"));
     }

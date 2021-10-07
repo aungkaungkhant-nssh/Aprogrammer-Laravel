@@ -4,6 +4,7 @@
         <div>
             <a href="{{route('post.create')}}" class="btn btn-primary">Create Post</a>
             <a href="/logout" class="btn btn-warning">logout</a>
+            <h4 style="float: right">{{auth()->user()->name}}</h4>
         </div>
         @foreach ($posts as $post)
             <div class="card mt-4">
