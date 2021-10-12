@@ -2,26 +2,40 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreRequest;
-use App\Models\Category;
+use App\Events\PostDeleteEvent;
 use App\Models\Post;
+
+use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreRequest;
+use App\Notifications\PostCreateNotifications;
+use Illuminate\Support\Facades\Notification;
+
 
 class PostController extends Controller
 {
     public function index(){
+        
         $posts=Post::where("user_id",auth()->user()->id)->orderBy("id","desc")->get();
         return view("home",compact("posts"));
     }
     public function create(){
+        
         $categories=Category::all();
+        
         return view("create",compact("categories"));
     }
     public function store(StoreRequest $request){
+        $title="testing";
         $validated=$request->validated();
-        Post::create($validated);
-        return redirect()->route("post.index");
-    }
+        $post=Post::create($validated+["user_id"=>auth()->user()->id]);
+        event(new PostDeleteEvent($post));
+        // email notifications
+        // Notification::send(auth()->user(), new PostCreateNotifications($post)); 
+        //database notifications
+        //  Notification::send(auth()->user(), new PostCreateNotifications($post,$title));
+        return redirect()->route("post.index")->with("create",config("flash.create.status"));
+        }
     public function show(Post $post){
         // if($post->user_id!==auth()->user()->id){
         //     abort(403);
@@ -42,7 +56,8 @@ class PostController extends Controller
     }
     public function destroy($id){
         
-        Post::findOrFail($id)->delete();
+        $post=Post::findOrFail($id)->delete();
+     
         return redirect()->route("post.index");
     }
 }

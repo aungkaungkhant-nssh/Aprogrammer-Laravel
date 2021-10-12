@@ -6,6 +6,14 @@
             <a href="/logout" class="btn btn-warning">logout</a>
             <h4 style="float: right">{{auth()->user()->name}}</h4>
         </div>
+        @if (Session::has("create"))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>{{Session::get("create")}}</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        @endif
         @foreach ($posts as $post)
             <div class="card mt-4">
                 <div class="card-header">
